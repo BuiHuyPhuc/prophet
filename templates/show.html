@@ -1,0 +1,82 @@
+<head>
+    <link href="{{ url_for('static', filename='app.css') }}" rel="stylesheet">
+</head>
+{% extends "bootstrap/base.html" %} 
+{% block title %} File Upload {% endblock %} 
+{% import "bootstrap/utils.html" as util%} 
+
+{% block content %}
+<div class="main-container container-fluid">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header"> 
+                <a href="#" class="navbar-brand">Web Prophet</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Upload a File</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {{ util.flashed_messages(dismissible=True) }}
+
+    <div class="row">
+        <div class="img-container">
+            <img class="NO-CACHE" src="/static/img/img1.png" alt="">
+            <img class="NO-CACHE" src="/static/img/img2.png" alt="">
+        </div>
+        <div class="container-fluid">
+            <form method="POST" enctype=multipart/form-data action="{{ url_for('show') }}">
+                <div class="file-form form-group">
+                    <label for="file_upload_field">Số ngày dự báo</label>
+                    <input placeholder="Số ngày dự báo" type="number" value=90 min=1 name="txtFuture_periods" id="txtFuture_periods">
+                </div> 
+                <div class="file-form form-group">
+                    <label for="file_upload_field">Số điểm thay đổi</label>
+                    <input placeholder="Số điểm thay đổi" type="number" value=25 min=1 name="txtChangepoints" id="txtChangepoints">
+                </div>   
+                <div class="file-form form-group">
+                    <label for="file_upload_field">Khoảng đặt điểm thay đổi</label>
+                    <input placeholder="Khoảng đặt điểm thay đổi" type="number" step=0.01 value=0.8 min=0 max=1 name="txtChangepoint_range" id="txtChangepoint_range">
+                </div> 
+                <div class="file-form form-group">
+                    <label for="file_upload_field">Mức ảnh hưởng của điểm thay đổi</label>
+                    <input placeholder="Mức ảnh hưởng của điểm thay đổi" type="number" step=0.01 value=0.05 min=0 max=1 name="txtChangepoint_scale" id="txtChangepoint_scale">
+                </div>
+                <div class="file-form form-group">
+                    <input type="checkbox" name="ckbCountry_holidays" id="ckbCountry_holidays">Bao gồm ngày nghỉ lễ Việt Nam</input>
+                </div>
+                <div class="file-form form-group">
+                    <label for="file_upload_field">Mức ảnh hưởng của ngày nghỉ lễ</label>
+                    <input placeholder="Mức ảnh hưởng của ngày nghỉ lễ" type="number" step=0.05 value=10 min=0 name="txtHolidays_scale" id="txtHolidays_scale">
+                </div>
+                <div class="file-form form-group">
+                    <input type="checkbox" name="ckbMonthly_seasonality" id="ckbMonthly_seasonality">Bao gồm chu kỳ tháng</input>
+                </div>
+                <div class="file-form form-group">
+                    <label for="file_upload_field">Số ngày trong chu kỳ tháng</label>
+                    <input placeholder="Số ngày trong chu kỳ tháng" type="number" step=0.5 value=30.5 min=0 name="txtSeasonality_days" id="txtSeasonality_days">
+                </div>
+                <div class="file-form form-group">
+                    <label for="file_upload_field">Tốc độ thay đổi trong chu kỳ tháng</label>
+                    <input placeholder="Tốc độ thay đổi trong chu kỳ tháng" type="number" step=1 value=5 min=0 name="txtFourier_monthly" id="txtFourier_monthly">
+                </div> 
+                <button type="submit" class="file-form-button btn btn-primary">Gửi</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script language="javascript" type="text/javascript">
+    (function() {
+    console.log("tao nef")
+        var nods = document.getElementsByClassName('NO-CACHE');
+        for (var i = 0; i < nods.length; i++)
+        {
+            nods[i].attributes['src'].value += "?a=" + Math.random();
+        }
+    })()
+</script>
+{% endblock %}
